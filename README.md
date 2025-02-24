@@ -6,8 +6,8 @@ Peram is a solution to self-heberged your receipe's database and access from rem
 
 ## Roads
 ```http
-GET /users/{user_id}/recipes/{recipes_id}
+GET /users/{user_id}/recipes/{recipe_id}
 POST /users/{user_id}/recipes
-PUT /users/{user_id}/recipes/{recipes_id}
-DELETE /users/{user_id}/recipes/{recipes_id}
+PUT /users/{user_id}/recipes/{recipe_id}
+DELETE /users/{user_id}/recipes/{recipe_id}
 ```
