@@ -5,6 +5,18 @@
         <h1 class="title">Register</h1>
         <form @submit.prevent="register" class="form">
           <div class="form-group">
+            <label for="full_name" class="form-label">Full name:</label>
+            <input
+              type="text"
+              v-model="full_name"
+              placeholder="Enter your name"
+              required
+              class="form-input"
+              :disabled="!isActive"
+            />
+          </div>
+
+          <div class="form-group">
             <label for="email" class="form-label">Email:</label>
             <input
               type="email"
@@ -48,6 +60,7 @@ import { useAuthStore } from "../stores/auth";
 import gsap from "gsap";
 import { useRouter } from "vue-router";
 
+const full_name = ref("");
 const email = ref("");
 const password = ref("");
 const authStore = useAuthStore();
@@ -57,10 +70,13 @@ const boxRef = ref<HTMLElement | null>(null);
 const transitionName = ref("slide-right");
 
 const register = async () => {
-  if (!isActive.value) return;
-  await authStore.register(email.value, password.value);
-  transitionName.value = "slide-left";
-  router.push("/login");
+  try {
+    await authStore.register(full_name.value, email.value, password.value);
+    setTransition("slide-left");
+    router.push("/login");
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 const setTransition = (name: string) => {
