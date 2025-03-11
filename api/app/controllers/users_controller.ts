@@ -6,7 +6,7 @@ import { DateTime } from 'luxon'
 
 export default class UsersController {
   index() {
-    return db.query().from('users')
+    return db.query().select('id', 'full_name', 'email', 'created_at', 'updated_at').from('users')
   }
 
   async create({ request }: HttpContext) {
@@ -20,8 +20,9 @@ export default class UsersController {
     try {
       await db.table('users').insert(user)
       console.log('Created')
-    } catch (e) {
-      console.log(e)
+    } catch (Exception) {
+      console.log(Exception)
+      throw Exception
     }
   }
 
@@ -41,8 +42,9 @@ export default class UsersController {
           token: token.value!.release(),
         }
       }
-    } catch (e) {
-      console.log(e)
+    } catch (Exception) {
+      console.log(Exception)
+      throw Exception
     }
   }
 
@@ -53,8 +55,9 @@ export default class UsersController {
       await User.accessTokens.delete(user, user.currentAccessToken.identifier)
 
       console.log('Logged out')
-    } catch (e) {
-      console.log(e)
+    } catch (Exception) {
+      console.log(Exception)
+      throw Exception
     }
   }
 
@@ -65,8 +68,9 @@ export default class UsersController {
       return {
         full_name: user.fullName,
       }
-    } catch (e) {
-      console.log(e)
+    } catch (Exception) {
+      console.log(Exception)
+      throw Exception
     }
   }
 }
