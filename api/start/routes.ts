@@ -7,29 +7,22 @@
 |
 */
 
-import { Exception } from "@adonisjs/core/exceptions";
-import router from "@adonisjs/core/services/router";
-import { STATUS_CODES } from "http";
+import { Exception } from '@adonisjs/core/exceptions'
+import router from '@adonisjs/core/services/router'
+import { STATUS_CODES } from 'http'
 
-const UsersController = () => import("#controllers/users_controller");
+const UsersController = () => import('#controllers/users_controller')
 
-router.post("/users", [UsersController, "create"]);
+router.post('/users', [UsersController, 'create'])
 
-router.post("/login", async (c) => {
-  const body = c.request.body();
-  const usr = body.user;
-  const mdp = body.mdp;
-  if (usr == "John" && mdp == "Salut") {
-    return "yoooo";
-  }
-});
+router.post('/login', [UsersController, 'login'])
 
-router.post("/logout", async (c) => {
-  return {
-    isOk: "true",
-  };
-});
+router.post('/logout', [UsersController, 'logout'])
 
-router.post("/test", async (c) => {
-  return c.request.body().test;
-});
+router.get('/', async () => {
+  return { message: 'Welcome to my API' }
+})
+
+router.post('/test', async (c) => {
+  return c.request.body().test
+})

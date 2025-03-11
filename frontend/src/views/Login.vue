@@ -58,15 +58,12 @@ const boxRef = ref<HTMLElement | null>(null);
 const transitionName = ref("slide-down");
 
 const login = async () => {
-  // await authStore.login(email.value, password.value);
-  // if (authStore.isAuthenticated()) {
-  //   router.push("/dashboard");
-  // }
+  await authStore.login(email.value, password.value);
   isActive.value = false;
   setTimeout(() => {
     transitionName.value = "slide-down";
     router.push("/dashboard");
-  }, 50); // Match the transition duration
+  }, 50);
 };
 
 const setTransition = (name: string) => {
