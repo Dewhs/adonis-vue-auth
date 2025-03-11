@@ -18,7 +18,7 @@ export const useAuthStore = defineStore("auth", {
         await axios.post("http://localhost:3333/users", {
           full_name,
           email,
-          password
+          password,
         });
       } catch (error) {
         console.error("Registration failed", error);
@@ -27,31 +27,39 @@ export const useAuthStore = defineStore("auth", {
 
     async login(email: string, password: string) {
       try {
-        const response = await axios.post("http://127.0.0.1:3333/login", {
+        const response = await axios.post("http://localhost:3333/login", {
           email,
           password,
         });
+
         this.token = response.data.token;
-        this.user = response.data.user;
-        if (this.user) {
-          this.user.isConnected = true;
-          if (this.token) {
-            localStorage.setItem("token", this.token);
-          }
+        if (this.token) {
+          localStorage.setItem("token", this.token);
         }
+
+        return response.data;
       } catch (error) {
         console.error("Login failed", error);
       }
     },
 
-    logout() {
-      this.user = null;
-      this.token = null;
-      localStorage.removeItem("token");
-    },
-
-    isAuthenticated() {
-      return !!this.user;
+    async logout() {
+      try {
+        if (this.token) {
+          const header = { Authorization: `Bearer ${this.token}` };
+          await axios.post(
+            "http://localhost:3333/logout",
+            {},
+            { headers: header }
+          );
+          localStorage.removeItem("token");
+          this.token = null;
+        } else {
+          throw new Error("No token found");
+        }
+      } catch (error) {
+        console.error("Logout failed", error);
+      }
     },
   },
 });
