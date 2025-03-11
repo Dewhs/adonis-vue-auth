@@ -61,5 +61,23 @@ export const useAuthStore = defineStore("auth", {
         console.error("Logout failed", error);
       }
     },
+
+    async showUser() {
+      try {
+        if (this.token) {
+          const header = { Authorization: `Bearer ${this.token}` };
+          const response = await axios.get("http://localhost:3333/users", {
+            headers: header,
+          });
+
+          console.log(response.data);
+          return response.data;
+        } else {
+          throw new Error("No token found");
+        }
+      } catch (error) {
+        console.error("Show user failed", error);
+      }
+    },
   },
 });
