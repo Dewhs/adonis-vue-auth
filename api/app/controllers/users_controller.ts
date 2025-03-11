@@ -57,4 +57,16 @@ export default class UsersController {
       console.log(e)
     }
   }
+
+  async show({ auth }: HttpContext) {
+    try {
+      const user = await auth.authenticate()
+      console.log('Showing user')
+      return {
+        full_name: user.fullName,
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
 }
