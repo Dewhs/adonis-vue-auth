@@ -66,7 +66,7 @@ export const useAuthStore = defineStore("auth", {
       try {
         if (this.token) {
           const header = { Authorization: `Bearer ${this.token}` };
-          const response = await axios.get("http://localhost:3333/users", {
+          const response = await axios.get("http://localhost:3333/users/me", {
             headers: header,
           });
 

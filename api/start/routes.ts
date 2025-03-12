@@ -15,11 +15,12 @@ const UsersController = () => import('#controllers/users_controller')
 
 router.post('/users', [UsersController, 'create'])
 
+router.get('/users/me', [UsersController, 'getMyFullName'])
+
 router.post('/login', [UsersController, 'login'])
 
 router.post('/logout', [UsersController, 'logout'])
 
-router.get('/users', [UsersController, 'show'])
 
 router.get('/', async () => {
   return { message: 'Welcome to my API' }
